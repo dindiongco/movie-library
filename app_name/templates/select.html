@@ -1,0 +1,30 @@
+<!-- Inherit from the base.html-->
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}
+<!-- Change the title of the page -->
+{% block title %}Select Movie{% endblock %}
+<!-- Add in the main content -->
+{% block content %}
+<div class="container">
+  {% for movie in movies: %}
+  <div class="card mb-3" style="max-width: 540px">
+    <a href="{{url_for('views.add_movie', id=movie['id'])}}">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="https://image.tmdb.org/t/p/w500/{{movie['poster_path']}}"
+            class="img-thumbnail rounded-start"
+            alt="{{movie.title}} movie image"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{movie['original_title']}}</h5>
+            <p class="card-text">{{movie['overview']}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

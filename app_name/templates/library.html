@@ -1,0 +1,36 @@
+<!-- Inherit from the base.html-->
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}
+<!-- Change the title of the page -->
+{% block title %}My Library{% endblock %}
+<!-- Add in the main content -->
+{% block content %}
+<h1 class="display-3 text-center text-white">Welcome to your Movie Reviews!</h1>
+<div class="container w-100">
+  <div class="row row-cols-12">
+    {% for movie in movies: %} {% if movie.user_id == user.id: %}
+    <div class="col g-3">
+      <div class="card me-auto" style="width: 15rem;">
+        <img
+          src="{{movie.img_url}}"
+          class="card-img-top"
+          alt="{{movie.title}} movie image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{movie.title}}</h5>
+          <p class="card-text"><strong>Rating: </strong> {{movie.rating}}</p>
+          <p class="card-text"><strong>Review: </strong>{{movie.review}}</p>
+          <a href="{{url_for('views.edit_movie', id=movie.id)}}" class="button"
+            ><i class="fas fa-edit mx-2" style="font-size: 18px;"></i
+          ></a>
+          <a
+            href="{{url_for('views.delete_movie', id=movie.id)}}"
+            class="button delete-button"
+            ><i class="fa fa-trash mx-2" style="font-size: 18px"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+    {% endif %} {% endfor %}
+  </div>
+</div>
+{% endblock %}
