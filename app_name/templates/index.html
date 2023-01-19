@@ -1,0 +1,65 @@
+<!-- Inherit from the base.html-->
+{% extends "base.html" %}
+<!-- Change the title of the page -->
+{% block title %}Home{% endblock %}
+<!-- Add in the main content -->
+{% block content %} {% if user.is_authenticated %}
+<h1 class="display-5 text-center text-white">
+  Hi {{user.username}}, here are some of the highest rated movies.
+</h1>
+{% else %}
+<h1 class="display-5 text-center text-white">
+  Here are some of the highest rated movies.
+</h1>
+{% endif %}
+
+<div
+  id="carouselExampleControls"
+  class="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div class="carousel-inner">
+    {% for movie in movies %}
+    <div class="carousel-item active">
+        <img
+          src="{{movie.img_url}}"
+          class="img-fluid d-block mx-auto"
+          alt="{{movie.title}} movie image"
+        />
+    </div>
+    {% endfor %}
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="container mt-5 me-auto">
+  <h5 class="text-white">Recommended Movies:</h5>
+  <ul class="list-group list-group-flush mb-5 rounded">
+    {% for movie in recommended %}
+    <a
+      href="{{ url_for('views.get_movie_details', title=movie['original_title'], id=movie['id']) }}"
+      class="list-group-item text-center"
+    >
+      {{movie['original_title']}}
+    </a>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!-- Inherit from the base.html-->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Change the title of the page -->
+{% block title %}Register{% endblock %}
+<!-- Add in the main content -->
+{% block content %}
+<h1 class="display-3 text-center text-white my-3">{{movie.title}}</h1>
+  <div class="container">
+    <div class="form-control bg-black w-50 row mx-auto">
+      <div class="col-lg-8 col-md-10 mx-auto text-white my-3">
+       {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark"}) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
