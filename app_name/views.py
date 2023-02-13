@@ -14,7 +14,7 @@ bp = Blueprint('views', __name__)
 @bp.route('/')
 def home():
     response = requests.get(url=api.TOP_RATED_MOVIE, params={
-        'api_key': api.API_KEYS,
+        'api_key': api.API_KEY,
     })
     data = response.json()['results'][0:9]
     all_movies = Movie.query.order_by(Movie.rating.desc()).limit(3).all()
@@ -36,7 +36,7 @@ def search_movie():
     if form.validate_on_submit():
         movie_title = form.title.data
         response = requests.get(url=api.SEARCH_MOVIE_URL, params={
-            'api_key': api.API_KEYS,
+            'api_key': api.API_KEY,
             'query': movie_title
         })
         data = response.json()['results']
@@ -49,7 +49,7 @@ def add_movie():
     movie_id = request.args.get('id')
     movie_url = f'{api.ID_URL}/{movie_id}'
     response = requests.get(url=movie_url, params={
-        'api_key': api.API_KEYS,
+        'api_key': api.API_KEY,
     })
     data = response.json()
     form = AddMovieForm()
@@ -87,7 +87,7 @@ def get_movie_details(title):
     movie_id = request.args.get('id')
     movie_url = f'{api.ID_URL}/{movie_id}'
     response = requests.get(url=movie_url, params={
-        'api_key': api.API_KEYS,
+        'api_key': api.API_KEY,
     })
     data = response.json()
     return render_template('movie_details.html', movie=data)
